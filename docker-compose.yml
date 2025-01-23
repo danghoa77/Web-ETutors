@@ -1,0 +1,30 @@
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: eTutoring-container
+    ports:
+      - "5002:80"
+      - "5001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=eTutoringDB;Username=eTutoringSql;Password=eTutoring123
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: my-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=eTutoringSql
+      - POSTGRES_PASSWORD=eTutoring123
+      - POSTGRES_DB=eTutoringDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
