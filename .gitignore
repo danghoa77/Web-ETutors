@@ -124,4 +124,3 @@ docker-compose.override.yml
 
 # ASP.NET Core
 wwwroot/
-eTutoring.sln
