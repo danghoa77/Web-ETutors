@@ -5,7 +5,6 @@ using eTutoring.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Configure services
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -34,6 +33,7 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
