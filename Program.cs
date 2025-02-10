@@ -20,6 +20,36 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+// Run migrations automatically with retry logic
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var maxAttempts = 10;
+    var attempts = 0;
+    var migrated = false;
+
+    while (!migrated && attempts < maxAttempts)
+    {
+        try
+        {
+            dbContext.Database.Migrate();
+            migrated = true;
+        }
+        catch (Exception ex)
+        {
+            attempts++;
+            Console.WriteLine($"Migration attempt {attempts} failed: {ex.Message}");
+            Thread.Sleep(5000); // wait for 5 seconds before retrying
+        }
+    }
+
+    if (!migrated)
+    {
+        Console.WriteLine("Database migration failed after multiple attempts.");
+        throw new Exception("Database migration failed.");
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

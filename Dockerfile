@@ -1,5 +1,5 @@
 # Use the official ASP.NET Core runtime as a parent image
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 5001
 
@@ -20,5 +20,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Run migrations and then start the app
-ENTRYPOINT ["sh", "-c", "dotnet ef database update && dotnet eTutoring.dll"]
+ENTRYPOINT ["dotnet", "eTutoring.dll"]
