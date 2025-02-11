@@ -12,15 +12,15 @@ using eTutoring.Data;
 namespace eTutoring.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250125225530_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20250210095047_Identity")]
+    partial class Identity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.1")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
