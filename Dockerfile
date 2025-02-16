@@ -3,21 +3,13 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 5001
 
-# Use the SDK image to build the app
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# Use the SDK image for development
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS development
 WORKDIR /src
 COPY ["eTutoring.csproj", "./"]
 RUN dotnet restore "./eTutoring.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "eTutoring.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "eTutoring.csproj" -c Release -o /app/publish
-
-# Use the runtime image to run the app
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-
-ENTRYPOINT ["dotnet", "eTutoring.dll"]
+# Start the app in development mode
+ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://+:5001"]

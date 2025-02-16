@@ -3,13 +3,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: development
     container_name: eTutoring-container
     ports:
       - "5001:5001"
     environment:
-      # - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5001
       - ConnectionStrings__DefaultConnection=Host=db;Database=eTutoringDB;Username=eTutoringSql;Password=eTutoring123
+    volumes:
+      - .:/src
+      - /src/obj/
+      - /src/bin/
     depends_on:
       - db
 
