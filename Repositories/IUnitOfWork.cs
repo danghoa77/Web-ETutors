@@ -12,6 +12,7 @@ namespace eTutoring.Repositories
         IPostRepository Posts { get; }
         ICommentRepository Comments { get; }
         IStaffRepository Staff { get; }
+        ITutorRequestRepository TutorRequests { get; }
         Task<int> SaveChangesAsync();
     }
 } 

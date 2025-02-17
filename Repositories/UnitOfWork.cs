@@ -15,6 +15,7 @@ namespace eTutoring.Repositories
         private IPostRepository? _postRepository;
         private ICommentRepository? _commentRepository;
         private IStaffRepository? _staffRepository;
+        private ITutorRequestRepository? _tutorRequestRepository;
 
         public UnitOfWork(DbContext context)
         {
@@ -50,6 +51,9 @@ namespace eTutoring.Repositories
 
         public IStaffRepository Staff =>
             _staffRepository ??= new StaffRepository(_context);
+
+        public ITutorRequestRepository TutorRequests =>
+            _tutorRequestRepository ??= new TutorRequestRepository(_context);
 
         public async Task<int> SaveChangesAsync()
         {
